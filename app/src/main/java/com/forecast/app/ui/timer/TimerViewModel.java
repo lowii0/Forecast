@@ -2,6 +2,8 @@ package com.forecast.app.ui.timer;
 
 import android.app.Application;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -9,16 +11,23 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.forecast.app.data.repo.SessionRepository;
+import com.forecast.app.data.repo.TaskRepository;
 import com.forecast.app.enums.TimerState;
 import com.forecast.app.models.PomodoroSession;
+import com.forecast.app.models.Task;
 import com.forecast.app.util.Constants;
 import com.forecast.app.util.DateTimeUtils;
 
 import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class TimerViewModel extends AndroidViewModel {
 
     private final SessionRepository sessionRepository;
+    private final TaskRepository taskRepository;        // NEW
+    private final ExecutorService executor;             // NEW
+    private final Handler mainHandler;                  // NEW
 
     // ── LiveData ──────────────────────────────────────────────────────────────
 
@@ -27,6 +36,9 @@ public class TimerViewModel extends AndroidViewModel {
     private final MutableLiveData<Integer> sessionCount = new MutableLiveData<>(0);
     private final MutableLiveData<Boolean> sessionCompleted = new MutableLiveData<>(false);
     private final MutableLiveData<String> currentLabel = new MutableLiveData<>("Ready");
+
+    // NEW (Phase 3): emits a Task when its session quota is met
+    private final MutableLiveData<Task> taskCompletionSuggestion = new MutableLiveData<>(null);
 
     // ── Internal state ────────────────────────────────────────────────────────
 
@@ -42,18 +54,23 @@ public class TimerViewModel extends AndroidViewModel {
     public TimerViewModel(@NonNull Application application) {
         super(application);
         sessionRepository = new SessionRepository(application);
+        taskRepository    = new TaskRepository(application);   // NEW
+        executor          = Executors.newSingleThreadExecutor(); // NEW
+        mainHandler       = new Handler(Looper.getMainLooper()); // NEW
+
         timeRemaining.setValue(Constants.FOCUS_DURATION_MS);
         currentDurationMs = Constants.FOCUS_DURATION_MS;
-        remainingMs = Constants.FOCUS_DURATION_MS;
+        remainingMs       = Constants.FOCUS_DURATION_MS;
     }
 
     // ── Getters ───────────────────────────────────────────────────────────────
 
-    public LiveData<Long> getTimeRemaining()    { return timeRemaining; }
-    public LiveData<TimerState> getTimerState() { return timerState; }
-    public LiveData<Integer> getSessionCount()  { return sessionCount; }
-    public LiveData<Boolean> getSessionCompleted() { return sessionCompleted; }
-    public LiveData<String> getCurrentLabel()   { return currentLabel; }
+    public LiveData<Long> getTimeRemaining()              { return timeRemaining; }
+    public LiveData<TimerState> getTimerState()           { return timerState; }
+    public LiveData<Integer> getSessionCount()            { return sessionCount; }
+    public LiveData<Boolean> getSessionCompleted()        { return sessionCompleted; }
+    public LiveData<String> getCurrentLabel()             { return currentLabel; }
+    public LiveData<Task> getTaskCompletionSuggestion()   { return taskCompletionSuggestion; } // NEW
 
     // ── Task Linking ──────────────────────────────────────────────────────────
 
@@ -67,13 +84,10 @@ public class TimerViewModel extends AndroidViewModel {
 
     // ── Timer Controls ────────────────────────────────────────────────────────
 
-    /**
-     * Starts a new FOCUS session.
-     */
     public void startFocus() {
         cancelCurrentTimer();
         currentDurationMs = Constants.FOCUS_DURATION_MS;
-        remainingMs = Constants.FOCUS_DURATION_MS;
+        remainingMs       = Constants.FOCUS_DURATION_MS;
         timerState.setValue(TimerState.FOCUS);
         currentLabel.setValue("Focus");
         sessionStartTime = new Date();
@@ -82,9 +96,6 @@ public class TimerViewModel extends AndroidViewModel {
         startCountdown(remainingMs);
     }
 
-    /**
-     * Starts a SHORT or LONG break based on session count.
-     */
     public void startBreak() {
         cancelCurrentTimer();
         int count = sessionCount.getValue() != null ? sessionCount.getValue() : 0;
@@ -92,12 +103,12 @@ public class TimerViewModel extends AndroidViewModel {
 
         if (isLongBreak) {
             currentDurationMs = Constants.LONG_BREAK_DURATION_MS;
-            remainingMs = Constants.LONG_BREAK_DURATION_MS;
+            remainingMs       = Constants.LONG_BREAK_DURATION_MS;
             timerState.setValue(TimerState.LONG_BREAK);
             currentLabel.setValue("Long Break");
         } else {
             currentDurationMs = Constants.SHORT_BREAK_DURATION_MS;
-            remainingMs = Constants.SHORT_BREAK_DURATION_MS;
+            remainingMs       = Constants.SHORT_BREAK_DURATION_MS;
             timerState.setValue(TimerState.SHORT_BREAK);
             currentLabel.setValue("Short Break");
         }
@@ -107,9 +118,6 @@ public class TimerViewModel extends AndroidViewModel {
         startCountdown(remainingMs);
     }
 
-    /**
-     * Pauses the current countdown.
-     */
     public void pause() {
         if (timerState.getValue() == TimerState.FOCUS
                 || timerState.getValue() == TimerState.SHORT_BREAK
@@ -121,13 +129,9 @@ public class TimerViewModel extends AndroidViewModel {
         }
     }
 
-    /**
-     * Resumes from a paused state.
-     */
     public void resume() {
         if (timerState.getValue() == TimerState.PAUSED && remainingMs > 0) {
             isPaused = false;
-            // Restore the original state label
             if (currentDurationMs == Constants.FOCUS_DURATION_MS) {
                 timerState.setValue(TimerState.FOCUS);
                 currentLabel.setValue("Focus");
@@ -142,18 +146,21 @@ public class TimerViewModel extends AndroidViewModel {
         }
     }
 
-    /**
-     * Resets the timer back to IDLE state.
-     */
     public void reset() {
         cancelCurrentTimer();
         isPaused = false;
         timerState.setValue(TimerState.IDLE);
         currentLabel.setValue("Ready");
         timeRemaining.setValue(Constants.FOCUS_DURATION_MS);
-        remainingMs = Constants.FOCUS_DURATION_MS;
+        remainingMs       = Constants.FOCUS_DURATION_MS;
         currentDurationMs = Constants.FOCUS_DURATION_MS;
         sessionCompleted.setValue(false);
+    }
+
+    // ── NEW (Phase 3): clear the suggestion after the dialog is handled ───────
+
+    public void clearTaskCompletionSuggestion() {
+        taskCompletionSuggestion.setValue(null);
     }
 
     // ── Internal countdown logic ──────────────────────────────────────────────
@@ -182,24 +189,21 @@ public class TimerViewModel extends AndroidViewModel {
         }
     }
 
-    /**
-     * Called when countdown reaches zero. Saves session if it was a FOCUS session.
-     */
     private void onTimerFinished() {
         TimerState state = timerState.getValue();
 
         if (state == TimerState.FOCUS) {
-            // Increment session count
             int count = sessionCount.getValue() != null ? sessionCount.getValue() : 0;
             sessionCount.setValue(count + 1);
 
-            // Save completed session to database
             saveSession(true);
+
+            // NEW (Phase 3): check if the linked task is now fully done
+            checkIfLinkedTaskIsComplete();
 
             sessionCompleted.setValue(true);
             currentLabel.setValue("Focus Complete!");
         } else {
-            // Break finished
             sessionCompleted.setValue(true);
             currentLabel.setValue("Break Over!");
         }
@@ -207,16 +211,11 @@ public class TimerViewModel extends AndroidViewModel {
         timerState.setValue(TimerState.IDLE);
     }
 
-    /**
-     * Saves a PomodoroSession to the database.
-     * @param completed whether the session was fully completed
-     */
     private void saveSession(boolean completed) {
         TimerState state = timerState.getValue();
         if (state == null) return;
 
         int durationMin = (int) (currentDurationMs / 60000);
-
         PomodoroSession session = new PomodoroSession(linkedTaskId, state, durationMin);
         session.setStartTime(sessionStartTime != null ? sessionStartTime : new Date());
         session.setEndTime(new Date());
@@ -226,9 +225,26 @@ public class TimerViewModel extends AndroidViewModel {
     }
 
     /**
-     * Manually save a partial (incomplete) session if the user quits mid-session.
-     * Call this from the Fragment's onDestroyView or onStop if needed.
+     * NEW (Phase 3):
+     * Runs in background. Checks if the linked task's completed focus sessions
+     * have now reached (or exceeded) its estimatedPomodoros goal.
+     * If yes, posts the Task to taskCompletionSuggestion so the Fragment can
+     * show a "Did you finish this task?" dialog.
      */
+    private void checkIfLinkedTaskIsComplete() {
+        if (linkedTaskId == null) return;
+
+        executor.execute(() -> {
+            Task task = taskRepository.getTaskByIdSync(linkedTaskId);
+            if (task == null || task.isCompleted()) return;
+
+            int completedSessions = sessionRepository.getCompletedFocusCountForTask(linkedTaskId);
+            if (completedSessions >= task.getEstimatedPomodoros()) {
+                mainHandler.post(() -> taskCompletionSuggestion.setValue(task));
+            }
+        });
+    }
+
     public void saveIncompleteSessionIfRunning() {
         TimerState state = timerState.getValue();
         if (state == TimerState.FOCUS || state == TimerState.PAUSED) {
@@ -238,18 +254,12 @@ public class TimerViewModel extends AndroidViewModel {
         }
     }
 
-    // ── Formatting helper for UI ──────────────────────────────────────────────
+    // ── Formatting ────────────────────────────────────────────────────────────
 
-    /**
-     * Formats the given millisecond value into MM:SS for display.
-     */
     public String formatTime(long millis) {
         return DateTimeUtils.formatCountdown(millis);
     }
 
-    /**
-     * Returns progress as a float from 0.0 (empty) to 1.0 (full) for a progress bar.
-     */
     public float getProgress(long remainingMs) {
         if (currentDurationMs == 0) return 0f;
         return (float) remainingMs / currentDurationMs;
@@ -261,5 +271,6 @@ public class TimerViewModel extends AndroidViewModel {
     protected void onCleared() {
         super.onCleared();
         cancelCurrentTimer();
+        executor.shutdownNow();
     }
 }

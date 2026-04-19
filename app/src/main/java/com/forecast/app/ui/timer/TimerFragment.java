@@ -1,5 +1,6 @@
 package com.forecast.app.ui.timer;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,7 +73,6 @@ public class TimerFragment extends Fragment {
         // ── Task selector ─────────────────────────────────────────────────────
         tasksViewModel.getIncompleteTasks().observe(getViewLifecycleOwner(), tasks -> {
             taskList.clear();
-            // Add a "No task" placeholder
             Task placeholder = new Task();
             placeholder.setId(-1);
             placeholder.setTitle("No task selected");
@@ -83,42 +83,40 @@ public class TimerFragment extends Fragment {
             for (Task t : taskList) taskTitles.add(t.getTitle());
 
             ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                requireContext(), android.R.layout.simple_spinner_item, taskTitles);
+                    requireContext(), android.R.layout.simple_spinner_item, taskTitles);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerTaskSelector.setAdapter(adapter);
         });
 
         spinnerTaskSelector.setOnItemSelectedListener(
-            new android.widget.AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(android.widget.AdapterView<?> parent,
-                                           View v, int position, long id) {
-                    if (position < taskList.size()) {
-                        Task selected = taskList.get(position);
-                        if (selected.getId() == -1) {
-                            timerViewModel.setLinkedTask(null);
-                            tvLinkedTask.setText("No task linked");
-                        } else {
-                            timerViewModel.setLinkedTask(selected.getId());
-                            tvLinkedTask.setText("Linked: " + selected.getTitle());
+                new android.widget.AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(android.widget.AdapterView<?> parent,
+                                               View v, int position, long id) {
+                        if (position < taskList.size()) {
+                            Task selected = taskList.get(position);
+                            if (selected.getId() == -1) {
+                                timerViewModel.setLinkedTask(null);
+                                tvLinkedTask.setText("No task linked");
+                            } else {
+                                timerViewModel.setLinkedTask(selected.getId());
+                                tvLinkedTask.setText("Linked: " + selected.getTitle());
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void onNothingSelected(android.widget.AdapterView<?> parent) {}
-            }
+                    @Override
+                    public void onNothingSelected(android.widget.AdapterView<?> parent) {}
+                }
         );
 
-        // ── Observe ViewModel ─────────────────────────────────────────────────
+        // ── Observe timer LiveData ────────────────────────────────────────────
 
         timerViewModel.getTimeRemaining().observe(getViewLifecycleOwner(), millis -> {
             tvCountdown.setText(timerViewModel.formatTime(millis));
         });
 
-        timerViewModel.getTimerState().observe(getViewLifecycleOwner(), state -> {
-            updateButtonVisibility(state);
-        });
+        timerViewModel.getTimerState().observe(getViewLifecycleOwner(), this::updateButtonVisibility);
 
         timerViewModel.getSessionCount().observe(getViewLifecycleOwner(), count -> {
             tvSessionCount.setText("Sessions today: " + count);
@@ -130,14 +128,44 @@ public class TimerFragment extends Fragment {
 
         timerViewModel.getSessionCompleted().observe(getViewLifecycleOwner(), completed -> {
             if (Boolean.TRUE.equals(completed)) {
-                // Could show a dialog or animation here
                 tvStateLabel.setText("✓ Session complete!");
+            }
+        });
+
+        // ── NEW (Phase 3): observe task completion suggestion ─────────────────
+
+        timerViewModel.getTaskCompletionSuggestion().observe(getViewLifecycleOwner(), task -> {
+            if (task != null) {
+                showTaskCompletionDialog(task);
             }
         });
     }
 
+    /**
+     * NEW (Phase 3):
+     * Shows a dialog when the user has completed enough focus sessions for a task.
+     * Asks: "You've hit your goal! Want to mark this task as done?"
+     */
+    private void showTaskCompletionDialog(Task task) {
+        if (getContext() == null) return;
+
+        new AlertDialog.Builder(requireContext())
+                .setTitle("🎯 Goal Reached!")
+                .setMessage("You've completed all your planned focus sessions for:\n\n\"" +
+                        task.getTitle() + "\"\n\nWould you like to mark this task as done?")
+                .setPositiveButton("Yes, Mark Done!", (dialog, which) -> {
+                    tasksViewModel.setCompleted(task.getId(), true);
+                    timerViewModel.setLinkedTask(null);
+                    tvLinkedTask.setText("No task linked");
+                    // Reset spinner to "No task"
+                    spinnerTaskSelector.setSelection(0);
+                })
+                .setNegativeButton("Not Yet", (dialog, which) -> dialog.dismiss())
+                .setOnDismissListener(dialog -> timerViewModel.clearTaskCompletionSuggestion())
+                .show();
+    }
+
     private void updateButtonVisibility(TimerState state) {
-        // Reset all
         btnStart.setVisibility(View.GONE);
         btnPause.setVisibility(View.GONE);
         btnResume.setVisibility(View.GONE);
@@ -165,7 +193,6 @@ public class TimerFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        // Save partial session if the user navigates away mid-session
         timerViewModel.saveIncompleteSessionIfRunning();
     }
 }

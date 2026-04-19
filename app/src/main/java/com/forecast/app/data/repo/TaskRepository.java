@@ -23,7 +23,7 @@ public class TaskRepository {
         executor = Executors.newSingleThreadExecutor();
     }
 
-    // ── Write Operations (run off main thread) ────────────────────────────────
+    // ── Write Operations ──────────────────────────────────────────────────────
 
     public void insertTask(Task task) {
         executor.execute(() -> taskDao.insertTask(task));
@@ -52,7 +52,7 @@ public class TaskRepository {
         executor.execute(() -> taskDao.setTaskCompleted(taskId, completed));
     }
 
-    // ── Read Operations (LiveData – observed on main thread) ──────────────────
+    // ── Read Operations (LiveData) ────────────────────────────────────────────
 
     public LiveData<List<Task>> getAllTasks() {
         return taskDao.getAllTasks();
@@ -82,7 +82,7 @@ public class TaskRepository {
         return taskDao.getTasksForDay(startOfDay, endOfDay);
     }
 
-    // ── Sync reads (only use from background threads / repositories) ──────────
+    // ── Sync reads ────────────────────────────────────────────────────────────
 
     public List<Task> getAllTasksSync() {
         return taskDao.getAllTasksSync();
@@ -98,6 +98,16 @@ public class TaskRepository {
 
     public int getCompletedTaskCountForDay(long startOfDay, long endOfDay) {
         return taskDao.getCompletedTaskCountForDay(startOfDay, endOfDay);
+    }
+
+    // ── NEW (Phase 3): sync single-task fetch for TimerViewModel ─────────────
+
+    /**
+     * Fetches a single Task synchronously. Must be called from a background thread.
+     * Used by TimerViewModel to check if a linked task is ready to complete.
+     */
+    public Task getTaskByIdSync(int taskId) {
+        return taskDao.getTaskByIdSync(taskId);
     }
 
     // ── Callback interface ────────────────────────────────────────────────────
