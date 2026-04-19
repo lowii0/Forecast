@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvSummaryDate"
+            android:layout_height=""
+            android:layout_width=""
+            android:text="Placeholder"/>
+        <TextView
+            android:id="@+id/tvConditionEmoji"
+            android:textSize="40sp"
+            android:layout_height=""
+            android:layout_width=""
+            android:text="Placeholder"/>
+        <TextView
+            android:id="@+id/tvConditionLabel"
+            android:layout_height=""
+            android:layout_width=""
+            android:text="Placeholder"/>
+
+        <TextView
+            android:id="@+id/tvProductivityScore"
+            android:textSize="32sp"
+            android:layout_height=""
+            android:layout_width=""
+            android:text="Placeholder"/>
+
+        <ProgressBar
+            android:id="@+id/progressScore"
+            android:max="100"
+            style="?android:attr/progressBarStyleHorizontal"/>
+
+        <TextView
+            android:id="@+id/tvMotivationalMessage"
+            android:layout_height=""
+            android:layout_width=""
+            android:text="Placeholder"/>
+
+        <TextView
+            android:id="@+id/tvTotalTasks"
+            android:layout_height=""
+            android:layout_width=""
+            android:text="Placeholder"/>
+        <TextView
+            android:id="@+id/tvCompletedTasks"
+            android:layout_height=""
+            android:layout_width=""
+            android:text="Placeholder"/>
+        <TextView
+            android:id="@+id/tvTaskRate"
+            android:layout_height=""
+            android:layout_width=""
+            android:text="Placeholder"/>
+
+        <TextView
+            android:id="@+id/tvTotalSessions"
+            android:layout_height=""
+            android:layout_width=""/>
+        <TextView
+            android:id="@+id/tvCompletedSessions"
+            android:layout_height=""
+            android:layout_width=""
+            android:text="Placeholder"/>
+        <TextView
+            android:id="@+id/tvFocusMinutes"
+            android:layout_height=""
+            android:layout_width=""
+            android:text="Placeholder"/>
+
+        <ProgressBar
+            android:id="@+id/layoutLoading"
+            android:layout_height=""
+            android:layout_width=""/>
+
+        <Button
+            android:id="@+id/btnRefreshSummary"
+            android:text="Refresh"
+            android:layout_height=""
+            android:layout_width=""/>
+
+    </LinearLayout>
+</ScrollView>

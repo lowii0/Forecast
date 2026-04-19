@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_marginTop="20sp"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvHomeDate"
+        android:textColor="@android:color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(Day) - (Month) (01)"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tvGreeting"
+        android:layout_width="361dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:layout_height="wrap_content"
+        android:text="Good (time), (User)!"
+        android:textSize="30sp" />
+
+    <LinearLayout
+        android:id="@+id/cardMain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvHomeDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/bg_gradient_card"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Title -->
+        <TextView
+            android:text="Today's Forecast"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="(Weather State)"
+            android:textColor="@android:color/white"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="(Motivational Message)"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- Progress -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="Daily Productivity Score: "
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="XX%"
+                android:layout_marginLeft="130dp"
+                android:textAlignment="textEnd"
+                android:textColor="@android:color/holo_orange_light"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_marginTop="5dp"
+            android:max="100"
+            android:progress="72"
+            android:progressTint="#FFC107" />
+
+        <!-- Stats Row -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="X Tasks Done"
+                android:textSize="15sp"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Y Pomodoros"
+                android:textSize="15sp"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvIncompleteTaskCount"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Z Remaining"
+                android:textSize="15sp"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cardFocus"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="@drawable/bg_gradient_card"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toBottomOf="@id/cardMain"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:text="18:32"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_margin="12dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:text="Focus Session Active"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textAlignment="textEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:text="XX:XX Minutes Remaining - XX:XX Until Break"
+                android:textColor="@android:color/white"
+
+                android:textSize="10sp"
+                android:textAlignment="textEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="android:color/blue"
+            android:textSize="30dp"
+            android:textAlignment="center"
+            android:text="⏸"
+            android:layout_weight="1"/>
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnGoToTimer"
+        android:padding="30px"
+        android:layout_margin="8sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_gradient_card"
+        android:text="Start Timer"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvTodaysTasks"
+            android:layout_width="210sp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:text="Today's Tasks"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btnGoToTasks"
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:text="View All"
+            android:textAlignment="textEnd"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</LinearLayout>
