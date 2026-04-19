@@ -1,5 +1,6 @@
 package com.forecast.app.ui.tasks;
 
+import android.annotation.SuppressLint;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +54,7 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskViewHolder> {
                 return oldItem.getId() == newItem.getId();
             }
 
+            @SuppressLint("DiffUtilEquals")
             @Override
             public boolean areContentsTheSame(@NonNull Task oldItem, @NonNull Task newItem) {
                 return oldItem.getTitle().equals(newItem.getTitle())
