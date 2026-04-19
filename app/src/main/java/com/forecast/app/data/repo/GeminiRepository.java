@@ -1,8 +1,10 @@
 package com.forecast.app.data.repo;
 
 import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -13,66 +15,145 @@ import java.util.concurrent.Executors;
 
 public class GeminiRepository {
 
-    // TODO: Replace with your actual Gemini API Key securely
-    private static final String API_KEY = "YOUR_GEMINI_API_KEY_HERE";
-    private static final String API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + API_KEY;
+    private static final String API_KEY = "AIzaSyA1QT6OZs_02LOTgvDdXtd_PlV3--gFmtk";
+
+    // ✅ Stable working REST endpoint
+    // We update the name to gemini-3-flash-preview as per the new documentation
+    private static final String API_URL =
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=" + API_KEY;
+
     private final ExecutorService executor;
 
     public GeminiRepository() {
         executor = Executors.newSingleThreadExecutor();
     }
 
-    public void generateProductivityInsight(int tasksDone, int sessionsDone, String condition, InsightCallback callback) {
+    public void generateProductivityInsight(
+            int tasksDone,
+            int sessionsDone,
+            String condition,
+            InsightCallback callback
+    ) {
+
         executor.execute(() -> {
             try {
+
                 URL url = new URL(API_URL);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
+                conn.setRequestProperty("Accept", "application/json");
                 conn.setDoOutput(true);
 
-                // Build prompt
-                String prompt = "You are a brief, encouraging productivity coach inside an app called Forecast. " +
-                        "Today, the user completed " + tasksDone + " tasks and " + sessionsDone + " focus sessions. " +
-                        "Their overall productivity condition is " + condition + ". " +
-                        "Give them a 1 to 2 sentence personalized motivational insight.";
+                conn.setConnectTimeout(15000);
+                conn.setReadTimeout(15000);
 
-                // Build JSON payload
-                JSONObject part = new JSONObject();
-                part.put("text", prompt);
-                JSONObject partsObj = new JSONObject();
-                partsObj.put("parts", new JSONArray().put(part));
+                // -------------------------
+                // PROMPT
+                // -------------------------
+                String prompt =
+                        "You are a brief, encouraging productivity coach inside an app called Forecast. " +
+                                "Today the user completed " + tasksDone + " tasks and " +
+                                sessionsDone + " focus sessions. Their productivity condition is " +
+                                condition + ". Give a 1–2 sentence motivational insight.";
+
+                // -------------------------
+                // REQUEST JSON (CORRECT FORMAT)
+                // -------------------------
+                JSONObject textPart = new JSONObject();
+                textPart.put("text", prompt);
+
+                JSONArray parts = new JSONArray();
+                parts.put(textPart);
+
+                JSONObject content = new JSONObject();
+                content.put("parts", parts);
+
+                JSONArray contents = new JSONArray();
+                contents.put(content);
+
                 JSONObject payload = new JSONObject();
-                payload.put("contents", new JSONArray().put(partsObj));
+                payload.put("contents", contents);
 
-                // Send request
-                try(OutputStream os = conn.getOutputStream()) {
-                    byte[] input = payload.toString().getBytes("utf-8");
-                    os.write(input, 0, input.length);
+                // -------------------------
+                // SEND REQUEST
+                // -------------------------
+                try (OutputStream os = conn.getOutputStream()) {
+                    os.write(payload.toString().getBytes("utf-8"));
                 }
 
-                // Read response
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+                int code = conn.getResponseCode();
+
+                BufferedReader br = new BufferedReader(
+                        new InputStreamReader(
+                                (code >= 200 && code < 300)
+                                        ? conn.getInputStream()
+                                        : conn.getErrorStream(),
+                                "utf-8"
+                        )
+                );
+
                 StringBuilder response = new StringBuilder();
-                String responseLine;
-                while ((responseLine = br.readLine()) != null) {
-                    response.append(responseLine.trim());
+                String line;
+
+                while ((line = br.readLine()) != null) {
+                    response.append(line);
                 }
 
-                // Parse JSON response
-                JSONObject jsonResponse = new JSONObject(response.toString());
-                String aiText = jsonResponse.getJSONArray("candidates")
+                String raw = response.toString();
+
+                // -------------------------
+                // DEBUG LOG (IMPORTANT)
+                // -------------------------
+                Log.d("GeminiRAW", raw);
+
+                JSONObject json = new JSONObject(raw);
+
+                // -------------------------
+                // HANDLE API ERROR SAFELY
+                // -------------------------
+                if (json.has("error")) {
+                    JSONObject err = json.getJSONObject("error");
+                    callback.onError(err.toString());
+                    return;
+                }
+
+                // -------------------------
+                // SAFE PARSING (NO CRASH)
+                // -------------------------
+                JSONArray candidates = json.optJSONArray("candidates");
+
+                if (candidates == null || candidates.length() == 0) {
+                    callback.onError("No candidates returned. Full response: " + raw);
+                    return;
+                }
+
+                JSONObject contentObj = candidates
                         .getJSONObject(0)
-                        .getJSONObject("content")
-                        .getJSONArray("parts")
+                        .optJSONObject("content");
+
+                if (contentObj == null) {
+                    callback.onError("Missing content field. Raw: " + raw);
+                    return;
+                }
+
+                JSONArray partsArray = contentObj.optJSONArray("parts");
+
+                if (partsArray == null || partsArray.length() == 0) {
+                    callback.onError("Missing parts field. Raw: " + raw);
+                    return;
+                }
+
+                String aiText = partsArray
                         .getJSONObject(0)
-                        .getString("text");
+                        .optString("text", "Keep going — you're doing great!");
 
                 callback.onSuccess("AI Coach: " + aiText.trim());
 
             } catch (Exception e) {
                 Log.e("GeminiRepo", "Error fetching AI insight", e);
-                callback.onError(e.getMessage());
+                callback.onError(e.toString());
             }
         });
     }

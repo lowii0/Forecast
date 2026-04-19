@@ -45,7 +45,6 @@
                     android:layout_marginTop="2dp" />
             </LinearLayout>
 
-            <!-- AI badge -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -77,7 +76,7 @@
             android:background="@drawable/bg_ai_button"
             android:stateListAnimator="@null" />
 
-        <!-- ── Gemini reasoning box ───────────────────────────────────── -->
+        <!-- ── Gemini reasoning box (EMPTY for AI only) ──────────────── -->
         <LinearLayout
             android:id="@+id/layoutAiReasoning"
             android:layout_width="match_parent"
@@ -93,7 +92,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="✦  GEMINI'S REASONING"
+                android:text="✦  GEMINI INSIGHT"
                 android:textColor="#C4B5FD"
                 android:textSize="10sp"
                 android:textStyle="bold"
@@ -104,14 +103,14 @@
                 android:id="@+id/tvAiReasoning"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Based on your deadlines and priority levels, I suggest tackling high-stakes tasks first."
+                android:text=""
                 android:textColor="#B0BFDB"
                 android:textSize="11.5sp"
                 android:lineSpacingMultiplier="1.5" />
 
         </LinearLayout>
 
-        <!-- ── Ranked task list ───────────────────────────────────────── -->
+        <!-- ── Ranked task list (EMPTY container only) ──────────────── -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -131,112 +130,10 @@
             android:paddingStart="18dp"
             android:paddingEnd="18dp">
 
-            <!-- Placeholder rows shown before AI loads -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/bg_glass_card"
-                android:padding="12dp"
-                android:layout_marginBottom="8dp"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:text="1"
-                    android:textColor="#78350F"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:background="@drawable/bg_rank_gold" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Review group presentation slides"
-                        android:textColor="#FFFFFF"
-                        android:textSize="12.5sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Due tomorrow · High priority"
-                        android:textColor="#94A3B8"
-                        android:textSize="10.5sp"
-                        android:layout_marginTop="2dp" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="›"
-                    android:textColor="#55FFFFFF"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/bg_glass_card"
-                android:padding="12dp"
-                android:layout_marginBottom="8dp"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:text="2"
-                    android:textColor="#1E293B"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:background="@drawable/bg_rank_silver" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Complete Physics Problem Set"
-                        android:textColor="#FFFFFF"
-                        android:textSize="12.5sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Due Mar 12 · High priority"
-                        android:textColor="#94A3B8"
-                        android:textSize="10.5sp"
-                        android:layout_marginTop="2dp" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="›"
-                    android:textColor="#55FFFFFF"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
+            <!-- AI will populate this dynamically -->
         </LinearLayout>
 
-        <!-- Loading indicator for AI -->
+        <!-- Loading indicator -->
         <ProgressBar
             android:id="@+id/progressAi"
             android:layout_width="wrap_content"
