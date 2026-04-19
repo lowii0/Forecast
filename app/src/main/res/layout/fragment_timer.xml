@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvCountdown"
+        android:text="00:00"
+        android:textSize="48sp"
+        android:layout_height=""
+        android:layout_width=""/>
+
+    <TextView
+        android:id="@+id/tvTimerStateLabel"
+        android:text="Focus"
+        android:layout_height=""
+        android:layout_width=""/>
+
+    <TextView
+        android:id="@+id/tvSessionCount"
+        android:text="Sessions: 0"
+        android:layout_height=""
+        android:layout_width=""/>
+
+    <TextView
+        android:id="@+id/tvLinkedTask"
+        android:text="No Task Selected"
+        android:layout_height=""
+        android:layout_width=""/>
+
+    <Spinner
+        android:id="@+id/spinnerTaskSelector"
+        android:layout_height=""
+        android:layout_width=""/>
+
+    <Button
+        android:id="@+id/btnStartFocus"
+        android:text="Start Focus"
+        android:layout_height=""
+        android:layout_width=""/>
+    <Button
+        android:id="@+id/btnPause"
+        android:text="Pause"
+        android:layout_height=""
+        android:layout_width=""/>
+    <Button
+        android:id="@+id/btnResume"
+        android:text="Resume"
+        android:layout_height=""
+        android:layout_width=""/>
+    <Button
+        android:id="@+id/btnReset"
+        android:text="Reset"
+        android:layout_height=""
+        android:layout_width=""/>
+    <Button
+        android:id="@+id/btnStartBreak"
+        android:text="Start Break"
+        android:layout_height=""
+        android:layout_width=""/>
+
+</LinearLayout>
