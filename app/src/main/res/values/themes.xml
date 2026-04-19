@@ -1,83 +1,95 @@
-<!-- res/values/themes.xml -->
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <!--
     ═══════════════════════════════════════════════════════════════
-    BASE THEME — shared attributes for all time-of-day variants
+    BASE THEME — dark deep-blue base shared by all time variants
+    The background is always the dark sky. Only accent colors shift.
     ═══════════════════════════════════════════════════════════════
     -->
-    <style name="Theme.Base" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="android:fontFamily">sans-serif</item>
+    <style name="Theme.Base" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/bg_primary</item>
-        <item name="bottomNavigationStyle">@style/BottomNavStyle</item>
+        <item name="android:statusBarColor">@color/bg_primary</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@color/bg_primary</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="colorSurface">#111827</item>
+        <item name="colorOnSurface">#FFFFFF</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
     </style>
 
     <!--
     ═══════════════════════════════════════════════════════════════
-    MORNING THEME — 5:00 to 11:59 | Warm yellows & soft whites
+    MORNING — 5:00–11:59  |  Amber gold accent
     ═══════════════════════════════════════════════════════════════
     -->
     <style name="Theme.Morning" parent="Theme.Base">
-        <item name="colorPrimary">#F59E0B</item>         <!-- amber -->
+        <item name="colorPrimary">#F59E0B</item>
         <item name="colorPrimaryVariant">#D97706</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
         <item name="colorSecondary">#FCD34D</item>
         <item name="colorOnSecondary">#1F2937</item>
-        <item name="android:statusBarColor">#F59E0B</item>
-        <item name="android:navigationBarColor">#FEF3C7</item>
+        <item name="android:statusBarColor">#0A1628</item>
     </style>
 
     <!--
     ═══════════════════════════════════════════════════════════════
-    AFTERNOON THEME — 12:00 to 16:59 | Bright blues & clean whites
+    AFTERNOON — 12:00–16:59  |  Blue accent (default)
     ═══════════════════════════════════════════════════════════════
     -->
     <style name="Theme.Afternoon" parent="Theme.Base">
-        <item name="colorPrimary">#3B82F6</item>         <!-- blue -->
-        <item name="colorPrimaryVariant">#2563EB</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimary">#2563EB</item>
+        <item name="colorPrimaryVariant">#1D4ED8</item>
         <item name="colorSecondary">#93C5FD</item>
         <item name="colorOnSecondary">#1E3A5F</item>
-        <item name="android:statusBarColor">#2563EB</item>
-        <item name="android:navigationBarColor">#EFF6FF</item>
+        <item name="android:statusBarColor">#0A1628</item>
     </style>
 
     <!--
     ═══════════════════════════════════════════════════════════════
-    EVENING THEME — 17:00 to 20:59 | Orange & amber tones
+    EVENING — 17:00–20:59  |  Orange accent
     ═══════════════════════════════════════════════════════════════
     -->
     <style name="Theme.Evening" parent="Theme.Base">
-        <item name="colorPrimary">#EA580C</item>         <!-- orange -->
+        <item name="colorPrimary">#EA580C</item>
         <item name="colorPrimaryVariant">#C2410C</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
         <item name="colorSecondary">#FDBA74</item>
         <item name="colorOnSecondary">#431407</item>
-        <item name="android:statusBarColor">#C2410C</item>
-        <item name="android:navigationBarColor">#FFF7ED</item>
+        <item name="android:statusBarColor">#0A1628</item>
     </style>
 
     <!--
     ═══════════════════════════════════════════════════════════════
-    NIGHT THEME — 21:00 to 4:59 | Deep blues & indigos
+    NIGHT — 21:00–4:59  |  Indigo/purple accent
     ═══════════════════════════════════════════════════════════════
     -->
-    <style name="Theme.Night" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">#6366F1</item>         <!-- indigo -->
+    <style name="Theme.Night" parent="Theme.Base">
+        <item name="colorPrimary">#6366F1</item>
         <item name="colorPrimaryVariant">#4338CA</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
         <item name="colorSecondary">#A5B4FC</item>
         <item name="colorOnSecondary">#1E1B4B</item>
-        <item name="android:statusBarColor">#1E1B4B</item>
-        <item name="android:navigationBarColor">#0F172A</item>
-        <item name="android:windowBackground">@color/night_bg</item>
+        <item name="android:statusBarColor">#06101E</item>
+        <item name="android:windowBackground">#06101E</item>
     </style>
 
-    <!-- Bottom Navigation style -->
-    <style name="BottomNavStyle" parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="android:background">?attr/colorSurface</item>
-        <item name="itemIconTint">@color/bottom_nav_colors</item>
-        <item name="itemTextColor">@color/bottom_nav_colors</item>
+    <!-- Default theme for the application, used in AndroidManifest.xml -->
+    <style name="Theme.Forecast" parent="Theme.Afternoon" />
+
+    <!--
+    ═══════════════════════════════════════════════════════════════
+    Spinner item text style — makes spinner text white on dark bg
+    ═══════════════════════════════════════════════════════════════
+    -->
+    <style name="SpinnerItem" parent="Widget.AppCompat.TextView.SpinnerItem">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:paddingStart">8dp</item>
+    </style>
+
+    <style name="SpinnerDropDown" parent="Widget.AppCompat.TextView.SpinnerItem">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">#1B3A6B</item>
+        <item name="android:padding">12dp</item>
     </style>
 
 </resources>

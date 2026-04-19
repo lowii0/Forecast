@@ -1,3 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Forecast</string>
+
+    <!-- Navigation labels -->
+    <string name="nav_home">Home</string>
+    <string name="nav_tasks">Tasks</string>
+    <string name="nav_timer">Focus</string>
+    <string name="nav_summary">Forecast</string>
+    <string name="nav_ai">AI</string>
+
+    <!-- Timer labels -->
+    <string name="timer_focus">FOCUS</string>
+    <string name="timer_short_break">SHORT BREAK</string>
+    <string name="timer_long_break">LONG BREAK</string>
+    <string name="timer_paused">PAUSED</string>
+    <string name="timer_idle">Ready</string>
+
+    <!-- Task form -->
+    <string name="hint_task_title">e.g. Read Chapter 5</string>
+    <string name="hint_task_description">Optional details…</string>
+    <string name="hint_pomodoros">1</string>
+    <string name="label_select_due_date">📅  Tap to select due date</string>
+
+    <!-- Buttons -->
+    <string name="btn_save_task">Save Task</string>
+    <string name="btn_update_task">Update Task</string>
+    <string name="btn_start_focus">Start Focus</string>
+    <string name="btn_pause">Pause</string>
+    <string name="btn_resume">Resume</string>
+    <string name="btn_reset">Reset</string>
+    <string name="btn_start_break">Break</string>
+    <string name="btn_refresh">Refresh</string>
+    <string name="btn_analyze">🤖  Analyze &amp; Prioritize My Tasks</string>
+
+    <!-- Snackbar -->
+    <string name="msg_task_deleted">Task deleted</string>
+    <string name="msg_task_saved">Task saved!</string>
+    <string name="msg_task_updated">Task updated!</string>
+    <string name="action_undo">UNDO</string>
+
+    <!-- Empty states -->
+    <string name="empty_tasks_title">No tasks yet</string>
+    <string name="empty_tasks_subtitle">Tap + to add your first task</string>
+    <string name="no_task_linked">No task linked</string>
+    <string name="no_task_selected">No task selected</string>
 </resources>
