@@ -1,0 +1,31 @@
+# Gradle
+.gradle/
+build/
+
+# Local config (DO NOT PUSH)
+local.properties
+
+# IDE files
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Android Studio captures
+captures/
+
+# Generated files
+.externalNativeBuild/
+.cxx/
+
+# Keystore files
+*.jks
+*.keystore
+
+# Firebase / Google services
+google-services.json

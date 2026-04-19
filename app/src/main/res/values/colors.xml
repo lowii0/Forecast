@@ -1,0 +1,33 @@
+<!-- res/values/colors.xml -->
+<resources>
+    <!-- Base backgrounds -->
+    <color name="bg_primary">#FFFFFF</color>
+    <color name="night_bg">#0F172A</color>
+
+    <!-- Priority colors -->
+    <color name="priority_low">#10B981</color>      <!-- green -->
+    <color name="priority_medium">#3B82F6</color>   <!-- blue -->
+    <color name="priority_high">#F59E0B</color>     <!-- amber -->
+    <color name="priority_urgent">#EF4444</color>   <!-- red -->
+
+    <!-- Condition / weather colors -->
+    <color name="condition_sunny">#F59E0B</color>
+    <color name="condition_partly_sunny">#84CC16</color>
+    <color name="condition_cloudy">#6B7280</color>
+    <color name="condition_rainy">#3B82F6</color>
+    <color name="condition_stormy">#4B5563</color>
+
+    <!-- Timer state colors -->
+    <color name="timer_focus">#EF4444</color>       <!-- red for focus -->
+    <color name="timer_break">#10B981</color>       <!-- green for break -->
+    <color name="timer_idle">#9CA3AF</color>        <!-- gray for idle -->
+
+    <!-- Text -->
+    <color name="text_primary">#111827</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="text_on_dark">#F9FAFB</color>
+
+    <!-- Bottom nav -->
+    <color name="bottom_nav_selected">@color/colorPrimary</color>
+    <color name="bottom_nav_unselected">#9CA3AF</color>
+</resources>

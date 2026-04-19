@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         BOTTOM NAV DESTINATIONS
+         ═══════════════════════════════════════════════════════════════════ -->
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.forecast.app.ui.main.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/tasksFragment"
+        android:name="com.forecast.app.ui.tasks.TasksFragment"
+        android:label="Tasks"
+        tools:layout="@layout/fragment_tasks">
+
+        <!-- Navigate to Add/Edit Task -->
+        <action
+            android:id="@+id/action_tasksFragment_to_addEditTaskFragment"
+            app:destination="@id/addEditTaskFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/timerFragment"
+        android:name="com.forecast.app.ui.timer.TimerFragment"
+        android:label="Timer"
+        tools:layout="@layout/fragment_timer" />
+
+    <fragment
+        android:id="@+id/summaryFragment"
+        android:name="com.forecast.app.ui.summary.SummaryFragment"
+        android:label="Summary"
+        tools:layout="@layout/fragment_summary" />
+
+    <fragment
+        android:id="@+id/aiFragment"
+        android:name="com.forecast.app.ai.AiFragment"
+        android:label="AI"
+        tools:layout="@layout/fragment_ai" />
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         NON-BOTTOM-NAV DESTINATIONS
+         ═══════════════════════════════════════════════════════════════════ -->
+
+    <fragment
+        android:id="@+id/addEditTaskFragment"
+        android:name="com.forecast.app.ui.tasks.AddEditTaskFragment"
+        android:label="Task"
+        tools:layout="@layout/fragment_add_edit_task">
+
+        <!-- Arguments passed from TasksFragment -->
+        <argument
+            android:name="task_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="is_edit"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+
+</navigation>

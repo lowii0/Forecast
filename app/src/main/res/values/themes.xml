@@ -1,0 +1,83 @@
+<!-- res/values/themes.xml -->
+<resources>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════
+    BASE THEME — shared attributes for all time-of-day variants
+    ═══════════════════════════════════════════════════════════════
+    -->
+    <style name="Theme.Base" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:windowBackground">@color/bg_primary</item>
+        <item name="bottomNavigationStyle">@style/BottomNavStyle</item>
+    </style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════
+    MORNING THEME — 5:00 to 11:59 | Warm yellows & soft whites
+    ═══════════════════════════════════════════════════════════════
+    -->
+    <style name="Theme.Morning" parent="Theme.Base">
+        <item name="colorPrimary">#F59E0B</item>         <!-- amber -->
+        <item name="colorPrimaryVariant">#D97706</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">#FCD34D</item>
+        <item name="colorOnSecondary">#1F2937</item>
+        <item name="android:statusBarColor">#F59E0B</item>
+        <item name="android:navigationBarColor">#FEF3C7</item>
+    </style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════
+    AFTERNOON THEME — 12:00 to 16:59 | Bright blues & clean whites
+    ═══════════════════════════════════════════════════════════════
+    -->
+    <style name="Theme.Afternoon" parent="Theme.Base">
+        <item name="colorPrimary">#3B82F6</item>         <!-- blue -->
+        <item name="colorPrimaryVariant">#2563EB</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">#93C5FD</item>
+        <item name="colorOnSecondary">#1E3A5F</item>
+        <item name="android:statusBarColor">#2563EB</item>
+        <item name="android:navigationBarColor">#EFF6FF</item>
+    </style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════
+    EVENING THEME — 17:00 to 20:59 | Orange & amber tones
+    ═══════════════════════════════════════════════════════════════
+    -->
+    <style name="Theme.Evening" parent="Theme.Base">
+        <item name="colorPrimary">#EA580C</item>         <!-- orange -->
+        <item name="colorPrimaryVariant">#C2410C</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">#FDBA74</item>
+        <item name="colorOnSecondary">#431407</item>
+        <item name="android:statusBarColor">#C2410C</item>
+        <item name="android:navigationBarColor">#FFF7ED</item>
+    </style>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════
+    NIGHT THEME — 21:00 to 4:59 | Deep blues & indigos
+    ═══════════════════════════════════════════════════════════════
+    -->
+    <style name="Theme.Night" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">#6366F1</item>         <!-- indigo -->
+        <item name="colorPrimaryVariant">#4338CA</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">#A5B4FC</item>
+        <item name="colorOnSecondary">#1E1B4B</item>
+        <item name="android:statusBarColor">#1E1B4B</item>
+        <item name="android:navigationBarColor">#0F172A</item>
+        <item name="android:windowBackground">@color/night_bg</item>
+    </style>
+
+    <!-- Bottom Navigation style -->
+    <style name="BottomNavStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">?attr/colorSurface</item>
+        <item name="itemIconTint">@color/bottom_nav_colors</item>
+        <item name="itemTextColor">@color/bottom_nav_colors</item>
+    </style>
+
+</resources>
