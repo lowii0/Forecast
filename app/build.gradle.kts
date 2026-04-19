@@ -41,4 +41,11 @@ dependencies {
     // Room
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)
+
+    // Gemini AI SDK
+    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
+
+    // Lifecycle components for ViewModel/LiveData
+    implementation("androidx.lifecycle:lifecycle-viewmodel:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-livedata:2.6.2")
 }
