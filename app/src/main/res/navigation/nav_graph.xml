@@ -5,9 +5,13 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
-    <!-- ═══════════════════════════════════════════════════════════════════════
-         BOTTOM NAV DESTINATIONS
-         ═══════════════════════════════════════════════════════════════════ -->
+    <action
+        android:id="@+id/action_global_addEditTaskFragment"
+        app:destination="@id/addEditTaskFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
 
     <fragment
         android:id="@+id/homeFragment"
@@ -19,17 +23,7 @@
         android:id="@+id/tasksFragment"
         android:name="com.forecast.app.ui.tasks.TasksFragment"
         android:label="Tasks"
-        tools:layout="@layout/fragment_tasks">
-
-        <!-- Navigate to Add/Edit Task -->
-        <action
-            android:id="@+id/action_tasksFragment_to_addEditTaskFragment"
-            app:destination="@id/addEditTaskFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
+        tools:layout="@layout/fragment_tasks" />
 
     <fragment
         android:id="@+id/timerFragment"
@@ -45,13 +39,9 @@
 
     <fragment
         android:id="@+id/aiFragment"
-        android:name="com.forecast.app.ai.AiFragment"
+        android:name="com.forecast.app.ui.ai.AiFragment"
         android:label="AI"
         tools:layout="@layout/fragment_ai" />
-
-    <!-- ═══════════════════════════════════════════════════════════════════════
-         NON-BOTTOM-NAV DESTINATIONS
-         ═══════════════════════════════════════════════════════════════════ -->
 
     <fragment
         android:id="@+id/addEditTaskFragment"
@@ -59,7 +49,6 @@
         android:label="Task"
         tools:layout="@layout/fragment_add_edit_task">
 
-        <!-- Arguments passed from TasksFragment -->
         <argument
             android:name="task_id"
             app:argType="integer"

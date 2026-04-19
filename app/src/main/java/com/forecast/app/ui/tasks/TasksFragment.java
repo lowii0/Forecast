@@ -50,7 +50,7 @@ public class TasksFragment extends Fragment {
             args.putInt("task_id", task.getId());
             args.putBoolean("is_edit", true);
             Navigation.findNavController(view)
-                      .navigate(R.id.action_tasksFragment_to_addEditTaskFragment, args);
+                    .navigate(R.id.action_global_addEditTaskFragment, args); // FIXED
         });
 
         // Check / uncheck
@@ -84,7 +84,7 @@ public class TasksFragment extends Fragment {
             Bundle args = new Bundle();
             args.putBoolean("is_edit", false);
             Navigation.findNavController(view)
-                      .navigate(R.id.action_tasksFragment_to_addEditTaskFragment, args);
+                    .navigate(R.id.action_global_addEditTaskFragment, args); // FIXED
         });
     }
 }

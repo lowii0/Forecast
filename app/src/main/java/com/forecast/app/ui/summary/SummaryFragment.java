@@ -21,7 +21,6 @@ public class SummaryFragment extends Fragment {
 
     private SummaryViewModel viewModel;
 
-    // ── UI references ─────────────────────────────────────────────────────────
     private TextView tvDate, tvConditionLabel, tvConditionEmoji;
     private TextView tvScore, tvMotivation;
     private TextView tvTotalTasks, tvCompletedTasks, tvTaskRate;
@@ -40,10 +39,9 @@ public class SummaryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         viewModel = new ViewModelProvider(requireActivity()).get(SummaryViewModel.class);
 
-        // ── Bind views ────────────────────────────────────────────────────────
+        // Bind views
         tvDate             = view.findViewById(R.id.tvSummaryDate);
         tvConditionLabel   = view.findViewById(R.id.tvConditionLabel);
         tvConditionEmoji   = view.findViewById(R.id.tvConditionEmoji);
@@ -58,8 +56,7 @@ public class SummaryFragment extends Fragment {
         progressScore      = view.findViewById(R.id.progressScore);
         loadingLayout      = view.findViewById(R.id.layoutLoading);
 
-        // ── Observe ───────────────────────────────────────────────────────────
-
+        // Observe
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
             if (loadingLayout != null) {
                 loadingLayout.setVisibility(isLoading ? View.VISIBLE : View.GONE);
@@ -68,10 +65,16 @@ public class SummaryFragment extends Fragment {
 
         viewModel.getSummary().observe(getViewLifecycleOwner(), this::bindSummary);
 
-        // ── Load data ─────────────────────────────────────────────────────────
+        // NEW: Observe AI Insight
+        viewModel.getAiInsight().observe(getViewLifecycleOwner(), insight -> {
+            if (tvMotivation != null) {
+                tvMotivation.setText(insight);
+            }
+        });
+
+        // Load data
         viewModel.loadTodaySummary();
 
-        // Refresh button (optional)
         View btnRefresh = view.findViewById(R.id.btnRefreshSummary);
         if (btnRefresh != null) {
             btnRefresh.setOnClickListener(v -> viewModel.refresh());
@@ -81,28 +84,19 @@ public class SummaryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        // Always refresh when screen becomes visible
         viewModel.loadTodaySummary();
     }
 
     private void bindSummary(ProductivitySummary summary) {
         if (summary == null) return;
 
-        // Date
         tvDate.setText(DateTimeUtils.formatDate(summary.getDate()));
+        tvConditionLabel.setText(ProductivityCalculator.getConditionLabel(summary.getCondition()));
 
-        // Condition
-        tvConditionLabel.setText(
-            ProductivityCalculator.getConditionLabel(summary.getCondition()));
-        tvMotivation.setText(
-            ProductivityCalculator.getMotivationalMessage(summary.getCondition()));
-
-        // Score
         int scoreInt = (int) summary.getProductivityScore();
         tvScore.setText(scoreInt + "%");
         progressScore.setProgress(scoreInt);
 
-        // Condition emoji
         switch (summary.getCondition()) {
             case SUNNY:        tvConditionEmoji.setText("☀️"); break;
             case PARTLY_SUNNY: tvConditionEmoji.setText("⛅"); break;
@@ -111,12 +105,10 @@ public class SummaryFragment extends Fragment {
             case STORMY:       tvConditionEmoji.setText("⛈️"); break;
         }
 
-        // Task stats
         tvTotalTasks.setText("Total tasks: " + summary.getTotalTasks());
         tvCompletedTasks.setText("Completed: " + summary.getCompletedTasks());
         tvTaskRate.setText(String.format("%.0f%% completion", summary.getTaskCompletionRate()));
 
-        // Session stats
         tvTotalSessions.setText("Total focus sessions: " + summary.getTotalFocusSessions());
         tvCompletedSessions.setText("Completed: " + summary.getCompletedFocusSessions());
         tvFocusMinutes.setText("Total focus time: " + summary.getTotalFocusMinutes() + " min");

@@ -270,6 +270,7 @@
             android:gravity="center_vertical">
 
             <TextView
+                android:id="@+id/tvMiniTimerCountdown"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:text="—"
@@ -287,6 +288,7 @@
                 android:layout_marginStart="14dp">
 
                 <TextView
+                    android:id="@+id/tvMiniTimerLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Focus Timer"
@@ -295,6 +297,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvMiniTimerStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tap to open timer"
@@ -303,7 +306,6 @@
                     android:layout_marginTop="2dp" />
             </LinearLayout>
 
-            <!-- Navigates to TimerFragment -->
             <Button
                 android:id="@+id/btnGoToTimer"
                 android:layout_width="36dp"
