@@ -38,7 +38,7 @@ public class SummaryViewModel extends AndroidViewModel {
     public void loadTodaySummary() {
         isLoading.setValue(true);
         error.setValue(null);
-        aiInsight.setValue("Asking AI coach for insights..."); // Loading state for AI
+        aiInsight.setValue(" "); // Loading state for AI
 
         repository.getTodaySummary(result -> {
             mainHandler.post(() -> {
