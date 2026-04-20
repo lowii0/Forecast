@@ -46,29 +46,12 @@ public class SummaryViewModel extends AndroidViewModel {
                 isLoading.setValue(false);
 
                 // Fetch AI Insight once summary is ready
-                fetchAiInsight(result);
+
             });
         });
     }
 
-    private void fetchAiInsight(ProductivitySummary result) {
-        geminiRepository.generateProductivityInsight(
-                result.getCompletedTasks(),
-                result.getCompletedFocusSessions(),
-                result.getCondition().name(),
-                new GeminiRepository.InsightCallback() {
-                    @Override
-                    public void onSuccess(String insight) {
-                        mainHandler.post(() -> aiInsight.setValue(insight));
-                    }
 
-                    @Override
-                    public void onError(String errorMsg) {
-                        mainHandler.post(() -> aiInsight.setValue("Failed to load AI coach. Keep up the good work!"));
-                    }
-                }
-        );
-    }
 
     public void refresh() {
         loadTodaySummary();
