@@ -26,6 +26,11 @@ public class SummaryFragment extends Fragment {
     private TextView tvTotalTasks, tvCompletedTasks, tvTaskRate;
     private TextView tvTotalSessions, tvCompletedSessions, tvFocusMinutes;
     private ProgressBar progressScore;
+
+    // ✅ ADDED: Progress bars for tasks and sessions
+    private ProgressBar progressTasks;
+    private ProgressBar progressSessions;
+
     private View loadingLayout;
 
     @Nullable
@@ -54,6 +59,11 @@ public class SummaryFragment extends Fragment {
         tvCompletedSessions = view.findViewById(R.id.tvCompletedSessions);
         tvFocusMinutes     = view.findViewById(R.id.tvFocusMinutes);
         progressScore      = view.findViewById(R.id.progressScore);
+
+        // ADDED: Bind new progress bars (make sure IDs match XML)
+        progressTasks      = view.findViewById(R.id.progressTasks);
+        progressSessions   = view.findViewById(R.id.progressSessions);
+
         loadingLayout      = view.findViewById(R.id.layoutLoading);
 
         // Observe
@@ -112,5 +122,23 @@ public class SummaryFragment extends Fragment {
         tvTotalSessions.setText("Total focus sessions: " + summary.getTotalFocusSessions());
         tvCompletedSessions.setText("Completed: " + summary.getCompletedFocusSessions());
         tvFocusMinutes.setText("Total focus time: " + summary.getTotalFocusMinutes() + " min");
+
+        // Link task progress bar to task data
+        int totalTasks = summary.getTotalTasks();
+        int completedTasks = summary.getCompletedTasks();
+
+        if (totalTasks > 0 && progressTasks != null) {
+            progressTasks.setMax(totalTasks);
+            progressTasks.setProgress(completedTasks);
+        }
+
+        // Link session progress bar to session data
+        int totalSessions = summary.getTotalFocusSessions();
+        int completedSessions = summary.getCompletedFocusSessions();
+
+        if (totalSessions > 0 && progressSessions != null) {
+            progressSessions.setMax(totalSessions);
+            progressSessions.setProgress(completedSessions);
+        }
     }
 }

@@ -303,6 +303,7 @@
                     android:textSize="12sp" />
 
                 <ProgressBar
+                    android:id="@+id/progressTasks"
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:layout_width="0dp"
                     android:layout_height="6dp"
@@ -338,6 +339,7 @@
                     android:textSize="12sp" />
 
                 <ProgressBar
+                    android:id="@+id/progressSessions"
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:layout_width="0dp"
                     android:layout_height="6dp"
