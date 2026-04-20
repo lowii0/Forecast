@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 
 public class GeminiRepository {
 
-    private static final String API_KEY = "AIzaSyA1QT6OZs_02LOTgvDdXtd_PlV3--gFmtk";
+    private static final String API_KEY = "AIzaSyCd3frNAVLDJGsEoYvqxFYitl4GyL43lsA";
 
     // ✅ Stable working REST endpoint
     // We update the name to gemini-3-flash-preview as per the new documentation
