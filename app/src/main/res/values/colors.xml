@@ -1,52 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- ── App backgrounds ────────────────────────────────────────────────── -->
-    <color name="bg_primary">#0A1628</color>
-    <color name="bg_mid">#1B3A6B</color>
-    <color name="night_bg">#0A1628</color>
+    <!-- ── App backgrounds ───────────────────────────────────────────────── -->
+    <!-- Deeper, richer dark — less "midnight blue", more true dark navy -->
+    <color name="bg_primary">#060D1A</color>
+    <color name="bg_surface">#0D1B2E</color>
+    <color name="bg_card">#111E33</color>
+    <color name="bg_mid">#162848</color>
+    <color name="night_bg">#060D1A</color>
 
-    <!-- ── Brand blues ────────────────────────────────────────────────────── -->
-    <color name="blue_deep">#1E3FAF</color>
-    <color name="blue_main">#2563EB</color>
+    <!-- ── Brand blues — more vivid, better contrast on dark bg ─────────── -->
+    <color name="blue_deep">#1A3FAF</color>
+    <color name="blue_main">#3B82F6</color>       <!-- brighter, readable on dark -->
     <color name="blue_light">#93C5FD</color>
     <color name="blue_pale">#DBEAFE</color>
+    <color name="blue_accent">#60A5FA</color>     <!-- mid brightness accent -->
 
     <!-- ── Accent ─────────────────────────────────────────────────────────── -->
     <color name="gold">#F59E0B</color>
     <color name="gold_light">#FCD34D</color>
-    <color name="purple">#7C3AED</color>
-    <color name="pink">#DB2777</color>
-    <color name="green">#16A34A</color>
+    <color name="gold_bright">#FBBF24</color>
+    <color name="purple">#8B5CF6</color>
+    <color name="pink">#EC4899</color>
+    <color name="green">#22C55E</color>
+    <color name="green_bright">#4ADE80</color>
 
-    <!-- ── Priority colors ────────────────────────────────────────────────── -->
+    <!-- ── Priority — bright enough to read on dark cards ───────────────── -->
     <color name="priority_low">#4ADE80</color>
-    <color name="priority_low_bg">#22166534</color>
-    <color name="priority_medium">#FCD34D</color>
-    <color name="priority_medium_bg">#22F59E0B</color>
+    <color name="priority_low_bg">#1A4ADE80</color>
+    <color name="priority_medium">#FBBF24</color>
+    <color name="priority_medium_bg">#1AFBBF24</color>
     <color name="priority_high">#F87171</color>
-    <color name="priority_high_bg">#22EF4444</color>
+    <color name="priority_high_bg">#1AF87171</color>
     <color name="priority_urgent">#EF4444</color>
+    <color name="priority_urgent_bg">#20EF4444</color>
 
-    <!-- ── Condition / weather colors ────────────────────────────────────── -->
-    <color name="condition_sunny">#F59E0B</color>
-    <color name="condition_partly_sunny">#84CC16</color>
-    <color name="condition_cloudy">#6B7280</color>
-    <color name="condition_rainy">#3B82F6</color>
-    <color name="condition_stormy">#4B5563</color>
+    <!-- ── Weather / condition ───────────────────────────────────────────── -->
+    <color name="condition_sunny">#FBBF24</color>
+    <color name="condition_partly_sunny">#A3E635</color>
+    <color name="condition_cloudy">#94A3B8</color>
+    <color name="condition_rainy">#60A5FA</color>
+    <color name="condition_stormy">#6B7280</color>
 
-    <!-- ── Timer state colors ─────────────────────────────────────────────── -->
-    <color name="timer_focus">#EF4444</color>
-    <color name="timer_break">#16A34A</color>
-    <color name="timer_idle">#9CA3AF</color>
+    <!-- ── Timer ─────────────────────────────────────────────────────────── -->
+    <color name="timer_focus">#F87171</color>
+    <color name="timer_break">#4ADE80</color>
+    <color name="timer_idle">#64748B</color>
 
-    <!-- ── Text ───────────────────────────────────────────────────────────── -->
-    <color name="text_primary">#FFFFFF</color>
+    <!-- ── Text — high contrast whites ──────────────────────────────────── -->
+    <color name="text_primary">#F1F5F9</color>     <!-- near-white, easier on eyes -->
     <color name="text_secondary">#94A3B8</color>
-    <color name="text_muted">#475569</color>
+    <color name="text_muted">#64748B</color>
+    <color name="text_hint">#475569</color>
 
     <!-- ── Bottom nav ─────────────────────────────────────────────────────── -->
-    <color name="bottom_nav_selected">#93C5FD</color>
-    <color name="bottom_nav_unselected">#475569</color>
+    <color name="bottom_nav_selected">#60A5FA</color>
+    <color name="bottom_nav_unselected">#4A5568</color>
+
+    <!-- ── Dividers / strokes ─────────────────────────────────────────────── -->
+    <color name="stroke_subtle">#1AFFFFFF</color>
+    <color name="stroke_visible">#26FFFFFF</color>
 
 </resources>

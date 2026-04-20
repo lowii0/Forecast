@@ -1,94 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!--
-    ═══════════════════════════════════════════════════════════════
-    BASE THEME — dark deep-blue base shared by all time variants
-    The background is always the dark sky. Only accent colors shift.
-    ═══════════════════════════════════════════════════════════════
-    -->
+    <!-- ═══════════════════════════════════════════════════════════════
+         BASE — deep dark navy shared by all variants
+         ═══════════════════════════════════════════════════════════════ -->
     <style name="Theme.Base" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/bg_primary</item>
         <item name="android:statusBarColor">@color/bg_primary</item>
-        <item name="android:windowLightStatusBar">false</item>
         <item name="android:navigationBarColor">@color/bg_primary</item>
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="colorSurface">#111827</item>
-        <item name="colorOnSurface">#FFFFFF</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="colorSurface">@color/bg_surface</item>
+        <item name="colorOnSurface">@color/text_primary</item>
         <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorError">#F87171</item>
+        <!-- Ripple effect tint on dark bg -->
+        <item name="colorControlHighlight">#1A3B82F6</item>
     </style>
 
-    <!--
-    ═══════════════════════════════════════════════════════════════
-    MORNING — 5:00–11:59  |  Amber gold accent
-    ═══════════════════════════════════════════════════════════════
-    -->
+    <!-- ═══════════════════════════════════════════════════════════════
+         MORNING — 5:00–11:59  |  Warm amber
+         ═══════════════════════════════════════════════════════════════ -->
     <style name="Theme.Morning" parent="Theme.Base">
         <item name="colorPrimary">#F59E0B</item>
         <item name="colorPrimaryVariant">#D97706</item>
         <item name="colorSecondary">#FCD34D</item>
-        <item name="colorOnSecondary">#1F2937</item>
-        <item name="android:statusBarColor">#0A1628</item>
+        <item name="colorOnSecondary">#1C1400</item>
+        <item name="android:statusBarColor">@color/bg_primary</item>
     </style>
 
-    <!--
-    ═══════════════════════════════════════════════════════════════
-    AFTERNOON — 12:00–16:59  |  Blue accent (default)
-    ═══════════════════════════════════════════════════════════════
-    -->
+    <!-- ═══════════════════════════════════════════════════════════════
+         AFTERNOON — 12:00–16:59  |  Vivid blue (default)
+         ═══════════════════════════════════════════════════════════════ -->
     <style name="Theme.Afternoon" parent="Theme.Base">
-        <item name="colorPrimary">#2563EB</item>
-        <item name="colorPrimaryVariant">#1D4ED8</item>
+        <item name="colorPrimary">#3B82F6</item>
+        <item name="colorPrimaryVariant">#2563EB</item>
         <item name="colorSecondary">#93C5FD</item>
-        <item name="colorOnSecondary">#1E3A5F</item>
-        <item name="android:statusBarColor">#0A1628</item>
+        <item name="colorOnSecondary">#0D1B2E</item>
+        <item name="android:statusBarColor">@color/bg_primary</item>
     </style>
 
-    <!--
-    ═══════════════════════════════════════════════════════════════
-    EVENING — 17:00–20:59  |  Orange accent
-    ═══════════════════════════════════════════════════════════════
-    -->
+    <!-- ═══════════════════════════════════════════════════════════════
+         EVENING — 17:00–20:59  |  Warm orange
+         ═══════════════════════════════════════════════════════════════ -->
     <style name="Theme.Evening" parent="Theme.Base">
-        <item name="colorPrimary">#EA580C</item>
-        <item name="colorPrimaryVariant">#C2410C</item>
-        <item name="colorSecondary">#FDBA74</item>
-        <item name="colorOnSecondary">#431407</item>
-        <item name="android:statusBarColor">#0A1628</item>
+        <item name="colorPrimary">#FB923C</item>
+        <item name="colorPrimaryVariant">#EA580C</item>
+        <item name="colorSecondary">#FED7AA</item>
+        <item name="colorOnSecondary">#1C0A00</item>
+        <item name="android:statusBarColor">@color/bg_primary</item>
     </style>
 
-    <!--
-    ═══════════════════════════════════════════════════════════════
-    NIGHT — 21:00–4:59  |  Indigo/purple accent
-    ═══════════════════════════════════════════════════════════════
-    -->
+    <!-- ═══════════════════════════════════════════════════════════════
+         NIGHT — 21:00–4:59  |  Soft indigo
+         ═══════════════════════════════════════════════════════════════ -->
     <style name="Theme.Night" parent="Theme.Base">
-        <item name="colorPrimary">#6366F1</item>
-        <item name="colorPrimaryVariant">#4338CA</item>
-        <item name="colorSecondary">#A5B4FC</item>
-        <item name="colorOnSecondary">#1E1B4B</item>
-        <item name="android:statusBarColor">#06101E</item>
-        <item name="android:windowBackground">#06101E</item>
+        <item name="colorPrimary">#818CF8</item>
+        <item name="colorPrimaryVariant">#6366F1</item>
+        <item name="colorSecondary">#C7D2FE</item>
+        <item name="colorOnSecondary">#0E0A2A</item>
+        <item name="android:statusBarColor">#030712</item>
+        <item name="android:windowBackground">#030712</item>
     </style>
 
-    <!-- Default theme for the application, used in AndroidManifest.xml -->
+    <!-- Default app theme referenced in AndroidManifest -->
     <style name="Theme.Forecast" parent="Theme.Afternoon" />
 
-    <!--
-    ═══════════════════════════════════════════════════════════════
-    Spinner item text style — makes spinner text white on dark bg
-    ═══════════════════════════════════════════════════════════════
-    -->
+    <!-- Spinner text — white on dark popup -->
     <style name="SpinnerItem" parent="Widget.AppCompat.TextView.SpinnerItem">
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">@color/text_primary</item>
         <item name="android:textSize">14sp</item>
         <item name="android:paddingStart">8dp</item>
     </style>
 
     <style name="SpinnerDropDown" parent="Widget.AppCompat.TextView.SpinnerItem">
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">@color/text_primary</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:background">#1B3A6B</item>
+        <item name="android:background">@color/bg_mid</item>
         <item name="android:padding">12dp</item>
     </style>
 
