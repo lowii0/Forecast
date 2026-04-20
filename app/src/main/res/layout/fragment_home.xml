@@ -3,13 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent">
+    android:background="@color/bg_primary">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="24dp">
+        android:paddingBottom="28dp">
 
         <!-- ── Greeting header ─────────────────────────────────────────── -->
         <LinearLayout
@@ -18,8 +18,8 @@
             android:orientation="horizontal"
             android:paddingStart="22dp"
             android:paddingEnd="22dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="4dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="6dp"
             android:gravity="center_vertical">
 
             <LinearLayout
@@ -28,32 +28,30 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <!-- Set by HomeFragment → DateTimeUtils.formatDate(new Date()) -->
                 <TextView
                     android:id="@+id/tvHomeDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="#99BFDBFE"
+                    android:textColor="@color/blue_accent"
                     android:textSize="11sp"
-                    android:letterSpacing="0.1"
+                    android:letterSpacing="0.12"
                     android:textAllCaps="true" />
 
-                <!-- Set by HomeFragment → DateTimeUtils.getGreeting() -->
                 <TextView
                     android:id="@+id/tvGreeting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="#FFFFFF"
-                    android:textSize="21sp"
+                    android:textColor="@color/text_primary"
+                    android:textSize="22sp"
                     android:textStyle="bold"
-                    android:layout_marginTop="3dp" />
+                    android:layout_marginTop="2dp" />
             </LinearLayout>
 
             <TextView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
                 android:text="ME"
                 android:textColor="#FFFFFF"
                 android:textSize="13sp"
@@ -62,7 +60,7 @@
                 android:background="@drawable/bg_avatar" />
         </LinearLayout>
 
-        <!-- ── Score / Forecast card ───────────────────────────────────── -->
+        <!-- ── Forecast hero card ─────────────────────────────────────── -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,12 +71,11 @@
             android:background="@drawable/bg_gradient_card"
             android:padding="20dp">
 
-            <!-- Top row: condition text + emoji -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="14dp">
+                android:layout_marginBottom="16dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -90,77 +87,74 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="TODAY'S FORECAST"
-                        android:textColor="#88FFFFFF"
+                        android:textColor="#99FFFFFF"
                         android:textSize="10sp"
-                        android:letterSpacing="0.12" />
+                        android:letterSpacing="0.14"
+                        android:textAllCaps="true" />
 
-                    <!-- Set by SummaryViewModel → ProductivityCalculator.getConditionLabel() -->
                     <TextView
                         android:id="@+id/tvConditionLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="—"
                         android:textColor="#FFFFFF"
-                        android:textSize="25sp"
+                        android:textSize="26sp"
                         android:textStyle="bold"
                         android:layout_marginTop="4dp" />
 
-                    <!-- Set by SummaryViewModel → ProductivityCalculator.getMotivationalMessage() -->
                     <TextView
                         android:id="@+id/tvMotivationalMessage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textColor="#80FFFFFF"
-                        android:textSize="11sp"
-                        android:layout_marginTop="4dp" />
+                        android:textColor="#CCE8FFFF"
+                        android:textSize="11.5sp"
+                        android:layout_marginTop="5dp" />
                 </LinearLayout>
 
-                <!-- Set by SummaryViewModel → condition emoji switch -->
                 <TextView
                     android:id="@+id/tvConditionEmoji"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="—"
-                    android:textSize="50sp"
+                    android:textSize="52sp"
                     android:layout_gravity="center_vertical" />
             </LinearLayout>
 
-            <!-- Score percentage row -->
+            <!-- Score row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="7dp">
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Daily Productivity Score"
-                    android:textColor="#80FFFFFF"
-                    android:textSize="10.5sp" />
+                    android:textColor="#AAFFFFFF"
+                    android:textSize="11sp" />
 
-                <!-- Set by SummaryViewModel → summary.getProductivityScore() -->
                 <TextView
                     android:id="@+id/tvProductivityScore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="—"
-                    android:textColor="#F59E0B"
-                    android:textSize="12sp"
+                    android:textColor="@color/gold_bright"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Set by SummaryViewModel → progressScore.setProgress(score) -->
             <ProgressBar
                 android:id="@+id/progressScore"
                 style="@android:style/Widget.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="6dp"
+                android:layout_height="7dp"
                 android:max="100"
                 android:progress="0"
-                android:progressTint="#F59E0B"
+                android:progressTint="@color/gold_bright"
                 android:progressBackgroundTint="#33FFFFFF" />
 
             <!-- Stats strip -->
@@ -168,7 +162,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="16dp"
                 android:weightSum="3">
 
                 <LinearLayout
@@ -178,23 +172,21 @@
                     android:orientation="vertical"
                     android:gravity="center"
                     android:background="@drawable/bg_stat_chip"
-                    android:padding="9dp"
-                    android:layout_marginEnd="5dp">
-
-                    <!-- Set by SummaryViewModel → summary.getCompletedTasks() -->
+                    android:padding="10dp"
+                    android:layout_marginEnd="6dp">
                     <TextView
                         android:id="@+id/tvCompletedTasks"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="—"
                         android:textColor="#FFFFFF"
-                        android:textSize="18sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tasks Done"
-                        android:textColor="#70FFFFFF"
+                        android:textColor="@color/text_secondary"
                         android:textSize="10sp"
                         android:layout_marginTop="3dp" />
                 </LinearLayout>
@@ -206,23 +198,21 @@
                     android:orientation="vertical"
                     android:gravity="center"
                     android:background="@drawable/bg_stat_chip"
-                    android:padding="9dp"
-                    android:layout_marginEnd="5dp">
-
-                    <!-- Set by SummaryViewModel → summary.getCompletedFocusSessions() -->
+                    android:padding="10dp"
+                    android:layout_marginEnd="6dp">
                     <TextView
                         android:id="@+id/tvCompletedSessions"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="—"
                         android:textColor="#FFFFFF"
-                        android:textSize="18sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Pomodoros"
-                        android:textColor="#70FFFFFF"
+                        android:textColor="@color/text_secondary"
                         android:textSize="10sp"
                         android:layout_marginTop="3dp" />
                 </LinearLayout>
@@ -234,48 +224,45 @@
                     android:orientation="vertical"
                     android:gravity="center"
                     android:background="@drawable/bg_stat_chip"
-                    android:padding="9dp">
-
-                    <!-- Set by HomeFragment → incompleteTasks.size() -->
+                    android:padding="10dp">
                     <TextView
                         android:id="@+id/tvIncompleteTaskCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="—"
                         android:textColor="#FFFFFF"
-                        android:textSize="18sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Remaining"
-                        android:textColor="#70FFFFFF"
+                        android:textColor="@color/text_secondary"
                         android:textSize="10sp"
                         android:layout_marginTop="3dp" />
                 </LinearLayout>
-
             </LinearLayout>
         </LinearLayout>
 
         <!-- ── Pomodoro mini widget ────────────────────────────────────── -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="72dp"
             android:orientation="horizontal"
             android:layout_marginStart="18dp"
             android:layout_marginEnd="18dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/bg_glass_card"
-            android:padding="13dp"
+            android:padding="14dp"
             android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/tvMiniTimerCountdown"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
                 android:text="—"
-                android:textColor="#FFFFFF"
-                android:textSize="11sp"
+                android:textColor="@color/gold_bright"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:background="@drawable/bg_ring_placeholder" />
@@ -292,7 +279,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Focus Timer"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/text_primary"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
@@ -301,31 +288,31 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tap to open timer"
-                    android:textColor="#80FFFFFF"
+                    android:textColor="@color/text_secondary"
                     android:textSize="11sp"
                     android:layout_marginTop="2dp" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/btnGoToTimer"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:text="▶"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
                 android:padding="0dp"
-                android:background="@drawable/bg_blue_circle" />
-
+                android:background="@drawable/bg_ctrl_primary"
+                android:stateListAnimator="@null" />
         </LinearLayout>
 
-        <!-- ── Today's Tasks section ──────────────────────────────────── -->
+        <!-- ── Today's Tasks header ───────────────────────────────────── -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingStart="22dp"
             android:paddingEnd="22dp"
-            android:paddingTop="20dp"
+            android:paddingTop="22dp"
             android:paddingBottom="10dp"
             android:gravity="center_vertical">
 
@@ -334,22 +321,21 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Today's Tasks"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
-            <!-- Navigates to TasksFragment -->
             <TextView
                 android:id="@+id/btnGoToTasks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="View all →"
-                android:textColor="#93C5FD"
-                android:textSize="11sp"
+                android:textColor="@color/blue_accent"
+                android:textSize="12sp"
                 android:padding="4dp" />
         </LinearLayout>
 
-        <!-- Populated by HomeFragment observing TasksViewModel.getIncompleteTasks() -->
+        <!-- Populated by HomeFragment -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewHomeTasks"
             android:layout_width="match_parent"
@@ -359,17 +345,16 @@
             android:nestedScrollingEnabled="false"
             android:clipToPadding="false" />
 
-        <!-- Shown when no tasks exist yet -->
         <TextView
             android:id="@+id/tvHomeEmptyTasks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="No tasks yet — tap View all to add some!"
-            android:textColor="#94A3B8"
+            android:textColor="@color/text_muted"
             android:textSize="12sp"
             android:visibility="gone"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:layout_marginStart="22dp"
             android:layout_marginEnd="22dp" />
 
