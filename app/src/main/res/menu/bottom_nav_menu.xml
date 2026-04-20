@@ -1,29 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/ic_home"
         android:title="Home" />
-
     <item
         android:id="@+id/tasksFragment"
         android:icon="@drawable/ic_tasks"
         android:title="Tasks" />
-
     <item
         android:id="@+id/timerFragment"
         android:icon="@drawable/ic_timer"
-        android:title="Timer" />
-
+        android:title="Focus" />
     <item
         android:id="@+id/summaryFragment"
         android:icon="@drawable/ic_summary"
-        android:title="Summary" />
-
+        android:title="Forecast" />
     <item
         android:id="@+id/aiFragment"
         android:icon="@drawable/ic_ai"
         android:title="AI" />
-
 </menu>
